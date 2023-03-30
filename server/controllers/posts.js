@@ -1,4 +1,5 @@
 import Post from '../models/Post.js';
+import User from '../models/User.js';
 
 /* CREATE */
 export const createPost = async (req, res) => {
@@ -14,9 +15,10 @@ export const createPost = async (req, res) => {
 			userPicturePath: user.picturePath,
 			picturePath,
 			likes: {},
-			comments: {},
+			comments: [],
 		});
 		await newPost.save();
+
 		const post = await Post.find();
 		res.status(201).json(post);
 	} catch (err) {
@@ -51,6 +53,7 @@ export const likePost = async (req, res) => {
 		const { userId } = req.body;
 		const post = await Post.findById(id);
 		const isLiked = post.likes.get(userId);
+
 		if (isLiked) {
 			post.likes.delete(userId);
 		} else {

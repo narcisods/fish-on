@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema(
 		experience: String,
 		occupation: String,
 	},
-	{ tunestanos: true }
+	{ timestamps: true }
 );
 
 const User = mongoose.model('User', UserSchema);

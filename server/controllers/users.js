@@ -17,16 +17,27 @@ export const getUserCrew = async (req, res) => {
 		const user = await User.findById(id);
 
 		const crew = await Promise.all(user.crew.map((id) => User.findById(id)));
-		const formattedCrew = crew.map({
-			_id,
-			firstName,
-			lastName,
-			occupation,
-			location,
-			picturePath,
-			experience,
-			picturePath,
-		});
+		const formattedCrew = crew.map(
+			({
+				_id,
+				firstName,
+				lastName,
+				occupation,
+				location,
+				experience,
+				picturePath,
+			}) => {
+				return {
+					_id,
+					firstName,
+					lastName,
+					occupation,
+					location,
+					experience,
+					picturePath,
+				};
+			}
+		);
 		res.status(200).json(formattedCrew);
 	} catch (err) {
 		res.status(404).json({ message: err.message });
@@ -34,15 +45,16 @@ export const getUserCrew = async (req, res) => {
 };
 
 /* UPDATE */
-export const addRemoveCrew = async (req, res) => {
+export const addRemoveCrewMember = async (req, res) => {
 	try {
-		const { id, friendId } = req.params;
+		const { id, crewMemberId } = req.params;
 		const user = await User.findById(id);
 		const crewMember = await User.findById(crewMemberId);
-
-		if (user.crew.includes(crewMememberId)) {
+		if (user.crew.includes(crewMemberId)) {
 			user.crew = user.crew.filter((id) => id !== crewMemberId);
-			crewMember.crew = crewMember.crew.filter((id) => id !== id);
+			crewMember.crew = crewMember.crew.filter(
+				(crewMember) => crewMember !== id
+			);
 		} else {
 			user.crew.push(crewMemberId);
 			crewMember.crew.push(id);
@@ -51,18 +63,30 @@ export const addRemoveCrew = async (req, res) => {
 		await crewMember.save();
 
 		const crew = await Promise.all(user.crew.map((id) => User.findById(id)));
-		const formattedCrew = crew.map({
-			_id,
-			firstName,
-			lastName,
-			occupation,
-			location,
-			picturePath,
-			experience,
-			picturePath,
-		});
+		const formattedCrew = crew.map(
+			({
+				_id,
+				firstName,
+				lastName,
+				occupation,
+				location,
+				experience,
+				picturePath,
+			}) => {
+				return {
+					_id,
+					firstName,
+					lastName,
+					occupation,
+					location,
+					experience,
+					picturePath,
+				};
+			}
+		);
+
 		res.status(200).json(formattedCrew);
 	} catch (err) {
-		res.status(404).json({ message: err.message });
+		res.status(404).json({ message: 'err.message' });
 	}
 };

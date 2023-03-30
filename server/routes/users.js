@@ -1,5 +1,9 @@
 import express from 'express';
-import { getUser, getUserCrew, addRemoveCrew } from '../controllers/users.js';
+import {
+	getUser,
+	getUserCrew,
+	addRemoveCrewMember,
+} from '../controllers/users.js';
 import { verifyToken } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -9,6 +13,6 @@ router.get('/:id', verifyToken, getUser);
 router.get('/:id/crew', verifyToken, getUserCrew);
 
 /* UPDATE */
-router.patch('/:id/:crewId', verifyToken, addRemoveCrew);
+router.patch('/:id/:crewMemberId', verifyToken, addRemoveCrewMember);
 
 export default router;
