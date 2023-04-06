@@ -1,5 +1,5 @@
-Optimizations:
-Change assets to a cloud storage instead of local storage
+FISH ON!
+SOCIAL MEDIA-EQSUE APPLICTION BUILT FOR ANGLERS!
+Created a fullstack crud web application where anglers connect and share their catches and fishing adventures with other fishing enthusiasts!
 
-
-Fix adding experince on sign up
+Tech: ReactJS, Node.js, Express, Mongoose, React-Router, Redux
